@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel)
@@ -18,12 +19,20 @@ let city = ""
 
 struct WeatherManager {
     let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric"
+
     
     var delegate: WeatherManagerDelegate?
     
     func fetchWeather(city: String) {
         let urlString = "\(weatherUrl)&q=\(city)"
         performRequest(url: urlString)
+    }
+    
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees){      // by the way swift osht cool me dy funksoine me emer tnjent as long as ato kajn parametra te ndryshem
+        let urlString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
+        print(latitude, longitude)
+        performRequest(url: urlString)
+        
     }
     
     func performRequest (url: String) {
