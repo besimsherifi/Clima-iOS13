@@ -10,6 +10,7 @@ import Foundation
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel)
+    func didFailWithError(error: Error)
 }
 
 let apiKey = "44c089b00d79fdad4dc74d12b8a3d9e7"
@@ -42,7 +43,7 @@ struct WeatherManager {
     
     func hande(data: Data?, response: URLResponse?, error: Error?){
         if error != nil {
-            print(error!)
+            delegate?.didFailWithError(error: error!)
             return
         }
         
@@ -67,7 +68,7 @@ struct WeatherManager {
             return weather
             
         }catch{
-            print(error)
+            delegate?.didFailWithError(error: error)
             return nil
         }
         
